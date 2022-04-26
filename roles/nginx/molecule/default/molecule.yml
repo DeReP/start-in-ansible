@@ -1,0 +1,44 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: balancer-1
+    image: "n0c1ip/ubuntu:18.04-systemd"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /lib/systemd/systemd
+    capabilities:
+      - SYS_ADMIN
+    pre_build_image: true
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: converge.yml
+  inventory:
+    links:
+      hosts: hosts
+
+lint: |
+  flake8
+  yamllint .
+
+verifier:
+  name: testinfra
+  options:
+    hosts: balancer
+    v: true
+
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy

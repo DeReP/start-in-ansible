@@ -1,0 +1,33 @@
+---
+- hosts: web-1
+  pre_tasks:
+    - name: testinfra dependencies
+      apt:
+        name: iproute2
+        state: present
+  roles:
+    - initial
+    - php-fpm
+    - app
+
+- hosts: web-2
+  pre_tasks:
+    - name: testinfra dependencies
+      apt:
+        name: iproute2
+        state: present
+  roles:
+    - initial
+    - php-fpm
+    - app
+
+- hosts: balancer-1
+  pre_tasks:
+    - name: testinfra dependencies
+      apt:
+        name: iproute2
+        state: present
+  roles:
+    - initial
+    - nginx
+    - app

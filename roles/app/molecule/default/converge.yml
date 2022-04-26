@@ -1,0 +1,7 @@
+---
+- name: converge
+  hosts: instance
+  vars:
+    version: app
+  roles:
+    - app

@@ -1,0 +1,77 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: balancer-1
+    image: "n0c1ip/ubuntu:18.04-systemd"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /lib/systemd/systemd
+    capabilities:
+      - SYS_ADMIN
+    pre_build_image: true
+    exposed_ports:
+      - 80/tcp
+    published_ports:
+      - 0.0.0.0:8080:80/tcp
+    networks:
+      - name: web
+
+  - name: web-1
+    image: "n0c1ip/ubuntu:18.04-systemd"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /lib/systemd/systemd
+    capabilities:
+      - SYS_ADMIN
+    pre_build_image: true
+    exposed_ports:
+      - 9000/tcp
+    networks:
+      - name: web
+
+  - name: web-2
+    image: "n0c1ip/ubuntu:18.04-systemd"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /lib/systemd/systemd
+    capabilities:
+      - SYS_ADMIN
+    pre_build_image: true
+    exposed_ports:
+      - 9000/tcp
+    networks:
+      - name: web
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: converge.yml
+  inventory:
+    links:
+      hosts: hosts
+
+lint: |
+  flake8
+  yamllint .
+
+verifier:
+  name: testinfra
+  options:
+    v: true
+
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy
