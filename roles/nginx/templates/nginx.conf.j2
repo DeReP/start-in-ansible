@@ -1,0 +1,49 @@
+user {{ nginx_user }};
+worker_processes  auto;
+worker_cpu_affinity auto;
+
+error_log  /var/log/nginx/error.log;
+
+events {}
+
+http {
+
+        default_type            application/octet-stream;
+        access_log              /var/log/nginx/access.log;
+        keepalive_timeout       3;
+        client_max_body_size    13m;
+
+        upstream php {
+            {% for host in groups['web'] %}
+                server {{ hostvars[host]['inventory_hostname'] }}:{{ fpm_port }};  
+            {% endfor %}
+
+        }
+
+        server {
+            listen          {{ nginx_port }};
+            #index           index.php;
+            error_log       /var/log/nginx/error.log;
+            access_log      /var/log/nginx/access.log;
+            root            {{ static_files_location }};
+            
+            location / {
+                #root {{ static_files_location }};
+                index index.php;
+                
+            }
+
+            location ~* \.php$ {
+                fastcgi_index                   index.php;
+                fastcgi_pass                    php;
+                include                         /etc/nginx/fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+                try_files $uri =404;
+            }
+
+            location  ~ \.(gif|jpg|png|css|js|ico)$
+            {
+                root {{ static_files_location }};
+            }
+        }
+    }

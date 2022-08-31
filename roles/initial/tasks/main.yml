@@ -1,0 +1,21 @@
+---
+- name: Include vault vars
+  include_vars:
+    file: ./vaults/ssh-keys
+
+- name: Ansible user creation
+  user:
+    name: ansible
+    state: present
+
+- name: ansible user sudoers file
+  lineinfile:
+    dest: /etc/sudoers.d/ansible
+    line: "ansible ALL=(ALL) NOPASSWD: ALL"
+    create: true
+
+- name: Add ansible public key to host
+  authorized_key:
+    user: ansible
+    key: "{{ ssh_public_key }}"
+    state: present

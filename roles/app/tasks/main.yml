@@ -1,0 +1,13 @@
+---
+- name: create static folder
+  file:
+    path: '{{ static_files_location }}'
+    state: directory
+    mode: 0755
+
+- name: Copy app files
+  copy: 
+    src: ./linfo-4.0.6/
+    dest: '{{ static_files_location }}'
+    mode: 0555    
+  notify: Restart php-fpm

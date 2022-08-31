@@ -1,0 +1,55 @@
+---
+- name: Include nginx vars
+  include_vars:
+    file: ./roles/group_vars/nginx
+
+- name: Include common vars
+  include_vars:
+    file: ./roles/group_vars/all
+          
+- name: nginx user creation
+  user:
+    name: nginx
+    state: present
+
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: latest
+
+- name: Generate Nginx config
+  template: 
+    src: nginx.conf.j2 
+    dest: '/etc/nginx/nginx.conf'
+    mode: 0555
+  notify: Restart Nginx
+
+- name: Start and enable Nginx on boot
+  service: 
+    name: nginx 
+    state: started
+    enabled: yes
+
+- name: create static folder
+  file:
+    path: '{{ static_files_location }}'
+    state: directory
+    mode: 0755
+
+- name: Copy index.php
+  copy: 
+    src: ./linfo-4.0.6/index.php
+    dest: '{{ static_files_location }}/index.php'
+    mode: 0555
+  notify: Restart Nginx
+
+#- name: Copy static
+#  copy: 
+#    src: ./linfo-4.0.6/layout
+#    dest: '{{ static_files_location }}'
+#    mode: 0555    
+#  notify: Restart Nginx
+
+  
+
+

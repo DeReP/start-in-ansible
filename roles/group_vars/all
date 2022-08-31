@@ -1,0 +1,2 @@
+static_files_location: /var/www/php-site
+fpm_port: 9000

@@ -1,0 +1,7 @@
+[www]
+user = {{php_user}}
+group = {{php_group}}
+pm = ondemand
+pm.max_children = {{ pm_max_child }}
+listen = 0.0.0.0:{{ fpm_port }}
+listen.allowed_clients = localhost,{{groups['nginx']|join(',')}}
