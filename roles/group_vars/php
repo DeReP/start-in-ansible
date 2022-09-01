@@ -1,3 +1,0 @@
-php_user: www-data
-php_group: www-data
-pm_max_child: 4

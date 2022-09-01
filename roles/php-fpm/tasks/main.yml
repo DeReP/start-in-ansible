@@ -1,7 +1,7 @@
 ---
 - name: Include vars
   include_vars:
-    file: ./roles/group_vars/all
+    dir: '{{playbook_dir}}/roles/group_vars'
 
 - name: Install php-fpm
   apt:
@@ -21,11 +21,16 @@
       - php7.2-bcmath 
     state: latest
 
+- name: Php-fpm user creation
+  user:
+    name: '{{ php_user }}'
+    state: present
+
 - name: Generate php-fpm config
   template: 
     src: php.conf.j2 
     dest: '/etc/php/7.2/fpm/pool.d/www.conf'
-    mode: 0555
+    mode: 444
   notify: Restart php-fpm
   
 - name: Start and enable php-fpm on boot

@@ -1,0 +1,5 @@
+static_files_location: /var/www/php-site
+fpm_port: 9000
+php_user: www-data
+php_group: www-data
+pm_max_child: 4

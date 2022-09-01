@@ -1,11 +1,13 @@
 ---
 - name: Include vault vars
   include_vars:
-    file: ./vaults/ssh-keys
+    file: './vaults/ssh-keys'
+
 
 - name: Ansible user creation
   user:
     name: ansible
+    create_home: false
     state: present
 
 - name: ansible user sudoers file

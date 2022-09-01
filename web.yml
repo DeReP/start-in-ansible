@@ -1,4 +1,7 @@
 ---
+# full web server configuration
 - hosts: web
   roles: 
-    - role: php-fpm
+    - php-fpm
+    - app
+    
