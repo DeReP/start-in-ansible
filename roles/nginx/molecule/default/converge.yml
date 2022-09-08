@@ -3,6 +3,7 @@
   hosts: balancer-1
   vars:
     version: "4.0.6"
+    remote_tmp: "/tmp/.ansible-${USER}/tmp"
   pre_tasks:
     - name: testinfra dependencies
       apt:

@@ -17,6 +17,9 @@ provisioner:
   name: ansible
   playbooks:
     converge: converge.yml
+  inventory:
+    links:
+      hosts: hosts
 
 lint: |
   flake8
@@ -25,6 +28,7 @@ lint: |
 verifier:
   name: testinfra
   options:
+    hosts: instance
     v: true
 
 scenario:

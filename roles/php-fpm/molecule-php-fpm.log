@@ -1,0 +1,163 @@
+INFO     default scenario test matrix: lint, destroy, syntax, create, converge, idempotence, verify, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Set ANSIBLE_LIBRARY=/home/den/.cache/ansible-compat/419df5/modules:/home/den/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+INFO     Set ANSIBLE_COLLECTIONS_PATH=/home/den/.cache/ansible-compat/419df5/collections:/home/den/.ansible/collections:/usr/share/ansible/collections
+INFO     Set ANSIBLE_ROLES_PATH=/home/den/.cache/ansible-compat/419df5/roles:/home/den/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Inventory /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/hosts linked to /home/den/.cache/molecule/php-fpm/default/inventory/hosts
+INFO     Running default > lint
+./tasks/main.yml
+  4:6       warning  missing starting space in comment  (comments)
+
+INFO     Inventory /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/hosts linked to /home/den/.cache/molecule/php-fpm/default/inventory/hosts
+INFO     Running default > destroy
+INFO     Sanity checks: 'docker'
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+changed: [localhost] => (item=instance)
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+FAILED - RETRYING: [localhost]: Wait for instance(s) deletion to complete (300 retries left).
+ok: [localhost] => (item=instance)
+
+TASK [Delete docker networks(s)] ***********************************************
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Inventory /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/hosts linked to /home/den/.cache/molecule/php-fpm/default/inventory/hosts
+INFO     Running default > syntax
+
+playbook: /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/converge.yml
+INFO     Inventory /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/hosts linked to /home/den/.cache/molecule/php-fpm/default/inventory/hosts
+INFO     Running default > create
+
+PLAY [Create] ******************************************************************
+
+TASK [Log into a Docker registry] **********************************************
+skipping: [localhost] => (item=None)
+skipping: [localhost]
+
+TASK [Check presence of custom Dockerfiles] ************************************
+ok: [localhost] => (item={'capabilities': ['SYS_ADMIN'], 'command': '/lib/systemd/systemd', 'image': 'n0c1ip/ubuntu:18.04-systemd', 'name': 'instance', 'pre_build_image': True, 'privileged': True, 'volumes': ['/sys/fs/cgroup:/sys/fs/cgroup:ro']})
+
+TASK [Create Dockerfiles from image names] *************************************
+skipping: [localhost] => (item={'capabilities': ['SYS_ADMIN'], 'command': '/lib/systemd/systemd', 'image': 'n0c1ip/ubuntu:18.04-systemd', 'name': 'instance', 'pre_build_image': True, 'privileged': True, 'volumes': ['/sys/fs/cgroup:/sys/fs/cgroup:ro']})
+
+TASK [Discover local Docker images] ********************************************
+ok: [localhost] => (item={'changed': False, 'skipped': True, 'skip_reason': 'Conditional result was False', 'item': {'capabilities': ['SYS_ADMIN'], 'command': '/lib/systemd/systemd', 'image': 'n0c1ip/ubuntu:18.04-systemd', 'name': 'instance', 'pre_build_image': True, 'privileged': True, 'volumes': ['/sys/fs/cgroup:/sys/fs/cgroup:ro']}, 'ansible_loop_var': 'item', 'i': 0, 'ansible_index_var': 'i'})
+
+TASK [Build an Ansible compatible image (new)] *********************************
+skipping: [localhost] => (item=molecule_local/n0c1ip/ubuntu:18.04-systemd)
+
+TASK [Create docker network(s)] ************************************************
+
+TASK [Determine the CMD directives] ********************************************
+ok: [localhost] => (item={'capabilities': ['SYS_ADMIN'], 'command': '/lib/systemd/systemd', 'image': 'n0c1ip/ubuntu:18.04-systemd', 'name': 'instance', 'pre_build_image': True, 'privileged': True, 'volumes': ['/sys/fs/cgroup:/sys/fs/cgroup:ro']})
+
+TASK [Create molecule instance(s)] *********************************************
+changed: [localhost] => (item=instance)
+
+TASK [Wait for instance(s) creation to complete] *******************************
+FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (300 retries left).
+changed: [localhost] => (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '387628085968.7132', 'results_file': '/home/den/.ansible_async/387628085968.7132', 'changed': True, 'item': {'capabilities': ['SYS_ADMIN'], 'command': '/lib/systemd/systemd', 'image': 'n0c1ip/ubuntu:18.04-systemd', 'name': 'instance', 'pre_build_image': True, 'privileged': True, 'volumes': ['/sys/fs/cgroup:/sys/fs/cgroup:ro']}, 'ansible_loop_var': 'item'})
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=5    changed=2    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0
+
+INFO     Inventory /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/hosts linked to /home/den/.cache/molecule/php-fpm/default/inventory/hosts
+INFO     Running default > converge
+
+PLAY [converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [instance]
+
+TASK [testinfra dependencies] **************************************************
+changed: [instance]
+
+TASK [php-fpm : Include vars] **************************************************
+ok: [instance]
+
+TASK [php-fpm : Install php-fpm] ***********************************************
+changed: [instance]
+
+TASK [php-fpm : Php-fpm user creation] *****************************************
+changed: [instance]
+
+TASK [php-fpm : Generate php-fpm config] ***************************************
+changed: [instance]
+
+TASK [php-fpm : Start and enable php-fpm on boot] ******************************
+changed: [instance]
+
+RUNNING HANDLER [php-fpm : Restart php-fpm] ************************************
+changed: [instance]
+
+PLAY RECAP *********************************************************************
+instance                   : ok=8    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Inventory /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/hosts linked to /home/den/.cache/molecule/php-fpm/default/inventory/hosts
+INFO     Running default > idempotence
+
+PLAY [converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [instance]
+
+TASK [testinfra dependencies] **************************************************
+ok: [instance]
+
+TASK [php-fpm : Include vars] **************************************************
+ok: [instance]
+
+TASK [php-fpm : Install php-fpm] ***********************************************
+ok: [instance]
+
+TASK [php-fpm : Php-fpm user creation] *****************************************
+ok: [instance]
+
+TASK [php-fpm : Generate php-fpm config] ***************************************
+ok: [instance]
+
+TASK [php-fpm : Start and enable php-fpm on boot] ******************************
+ok: [instance]
+
+PLAY RECAP *********************************************************************
+instance                   : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Idempotence completed successfully.
+INFO     Inventory /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/hosts linked to /home/den/.cache/molecule/php-fpm/default/inventory/hosts
+INFO     Running default > verify
+INFO     Executing Testinfra tests found in /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/tests/...
+============================= test session starts ==============================
+platform linux -- Python 3.8.10, pytest-7.1.3, pluggy-1.0.0 -- /home/den/repos/ipr/devops_school_ansible/venv/bin/python3
+rootdir: /home/den
+plugins: testinfra-6.8.0
+collecting ... collected 3 items
+
+molecule/default/tests/test_default.py::test_socket[ansible:/instance] PASSED [ 33%]
+molecule/default/tests/test_default.py::test_package_checks[ansible:/instance] PASSED [ 66%]
+molecule/default/tests/test_default.py::test_service[ansible:/instance] PASSED [100%]
+
+============================== 3 passed in 12.77s ==============================
+INFO     Verifier completed successfully.
+INFO     Inventory /home/den/repos/ipr/devops_school_ansible/roles/php-fpm/molecule/default/hosts linked to /home/den/.cache/molecule/php-fpm/default/inventory/hosts
+INFO     Running default > destroy
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+changed: [localhost] => (item=instance)
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+FAILED - RETRYING: [localhost]: Wait for instance(s) deletion to complete (300 retries left).
+changed: [localhost] => (item=instance)
+
+TASK [Delete docker networks(s)] ***********************************************
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory

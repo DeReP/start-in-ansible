@@ -15,7 +15,7 @@ http {
 
         upstream php {
             {% for host in groups['web'] %}
-                server {{ hostvars[host]['inventory_hostname'] }}:{{ fpm_port }};  
+                server {{ hostvars[host]['ansible_host'] }}:{{ fpm_port }};  
             {% endfor %}
 
         }

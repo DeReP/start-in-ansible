@@ -1,6 +1,6 @@
 [nginx]
-10.80.1.47
+nginx-1     ansible_host=10.80.1.47
 
 [web]
-10.80.1.48
-10.80.1.49
+web-1       ansible_host=10.80.1.48
+web-2       ansible_host=10.80.1.49

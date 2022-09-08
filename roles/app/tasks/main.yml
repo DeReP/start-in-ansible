@@ -10,8 +10,8 @@
     mode: 755
 
 - name: Copy app files
-  copy: 
+  copy:
     src: ./linfo-4.0.6/
     dest: '{{ static_files_location }}'
-    mode: 444    
+    mode: 444
   notify: Restart php-fpm

@@ -3,11 +3,15 @@
   include_vars:
     file: './vaults/ssh-keys'
 
+- name: Install sudo
+  apt:
+    name: sudo
+    state: latest
+    update_cache: true
 
 - name: Ansible user creation
   user:
     name: ansible
-    create_home: false
     state: present
 
 - name: ansible user sudoers file

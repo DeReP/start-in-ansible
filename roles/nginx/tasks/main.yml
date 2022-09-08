@@ -1,8 +1,7 @@
 ---
 - name: Include vars
   include_vars:
-    #dir: '{{playbook_dir}}/roles/group_vars'
-    dir: '/home/den/repos/ipr/devops_school_ansible/roles/group_vars'
+    dir: '{{playbook_dir}}/roles/group_vars'
 
 - name: nginx user creation
   user:
@@ -13,6 +12,7 @@
   apt:
     name: nginx
     state: latest
+    update_cache: true
 
 - name: Generate Nginx config
   template:
@@ -26,6 +26,7 @@
     name: nginx
     state: started
     enabled: true
+  become: true
 
 - name: create static folder
   file:

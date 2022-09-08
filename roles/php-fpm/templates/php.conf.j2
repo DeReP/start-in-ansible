@@ -4,4 +4,4 @@ group = {{php_group}}
 pm = ondemand
 pm.max_children = {{ pm_max_child }}
 listen = 0.0.0.0:{{ fpm_port }}
-listen.allowed_clients = localhost,{{groups['nginx']|join(',')}}
+listen.allowed_clients = localhost{% for host in groups['nginx'] %},{{ hostvars[host]['ansible_host'] }}{% endfor %} ; enumerate hosts value ansible_host
