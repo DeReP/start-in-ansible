@@ -3,3 +3,4 @@ fpm_port: 9000
 php_user: www-data
 php_group: www-data
 pm_max_child: 4
+php_ver: 7.2

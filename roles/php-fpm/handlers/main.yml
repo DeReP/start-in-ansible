@@ -1,5 +1,5 @@
 ---
 - name: Restart php-fpm
   service:
-    name: php7.2-fpm
+    name: php{{php_ver}}-fpm
     state: restarted

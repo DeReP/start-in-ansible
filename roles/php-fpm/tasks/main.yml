@@ -6,19 +6,19 @@
 - name: Install php-fpm
   apt:
     name:
-      - php7.2
-      - php7.2-cli
-      - php7.2-fpm
-      - php7.2-json
-      - php7.2-pdo
-      - php7.2-mysql
-      - php7.2-zip
-      - php7.2-gd
-      - php7.2-mbstring
-      - php7.2-curl
-      - php7.2-xml
+      - php{{php_ver}}
+      - php{{php_ver}}-cli
+      - php{{php_ver}}-fpm
+      - php{{php_ver}}-json
+      - php{{php_ver}}-pdo
+      - php{{php_ver}}-mysql
+      - php{{php_ver}}-zip
+      - php{{php_ver}}-gd
+      - php{{php_ver}}-mbstring
+      - php{{php_ver}}-curl
+      - php{{php_ver}}-xml
       - php-pear
-      - php7.2-bcmath
+      - php{{php_ver}}-bcmath
     state: latest
 
 - name: Php-fpm user creation
@@ -29,12 +29,12 @@
 - name: Generate php-fpm config
   template:
     src: php.conf.j2
-    dest: '/etc/php/7.2/fpm/pool.d/www.conf'
+    dest: '/etc/php/{{php_ver}}/fpm/pool.d/www.conf'
     mode: 444
   notify: Restart php-fpm
 
 - name: Start and enable php-fpm on boot
   service:
-    name: php7.2-fpm
+    name: php{{php_ver}}-fpm
     state: started
     enabled: true
